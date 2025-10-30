@@ -20,42 +20,43 @@
             align-items: center;
             justify-content: center;
             color: white;
-            padding: 20px;
-            overflow: hidden;
+            padding: 15px;
+            overflow-x: hidden;
             position: relative;
         }
         
         .container {
-            max-width: 800px;
             width: 100%;
+            max-width: 500px;
             text-align: center;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: all 0.5s;
             z-index: 10;
+            margin: 0 auto;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             color: #ffd700;
         }
         
         .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            font-size: 1rem;
+            margin-bottom: 20px;
             opacity: 0.9;
         }
         
         .prize-display {
-            height: 200px;
+            height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 30px 0;
+            margin: 20px 0;
             position: relative;
             overflow: hidden;
             border-radius: 15px;
@@ -64,7 +65,7 @@
         }
         
         .prize-item {
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: bold;
             position: absolute;
             opacity: 0;
@@ -82,20 +83,23 @@
         .controls {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
         
         .btn {
             background: #ff4757;
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 12px 25px;
+            font-size: 1rem;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            min-width: 140px;
         }
         
         .btn:hover {
@@ -116,9 +120,9 @@
         }
         
         .result {
-            font-size: 1.5rem;
-            margin-top: 30px;
-            min-height: 60px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            min-height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -128,29 +132,31 @@
         .final-prize {
             color: #ffd700;
             font-weight: bold;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             margin-top: 10px;
         }
         
         .history {
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: left;
             background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
+            padding: 12px;
             border-radius: 10px;
-            max-height: 150px;
+            max-height: 120px;
             overflow-y: auto;
         }
         
         .history h3 {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #ffd700;
+            font-size: 1rem;
         }
         
         .history-item {
-            padding: 5px 0;
+            padding: 4px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
         }
         
         /* 生日祝福页面样式 */
@@ -166,17 +172,18 @@
             align-items: center;
             justify-content: center;
             z-index: 100;
+            padding: 20px;
         }
         
         .particle-text {
-            font-size: 5rem;
+            font-size: 3rem;
             font-weight: bold;
             text-align: center;
             margin-bottom: 30px;
             position: relative;
             z-index: 10;
             width: 100%;
-            height: 200px;
+            height: 150px;
         }
         
         .text-rain {
@@ -193,7 +200,7 @@
             position: absolute;
             color: #ff69b4; /* 粉色 */
             font-family: 'Arial', sans-serif;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             opacity: 0.7;
             animation: fall linear infinite;
@@ -211,39 +218,6 @@
             100% { filter: hue-rotate(360deg); }
         }
         
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .prize-item {
-                font-size: 2.5rem;
-            }
-            
-            .controls {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .particle-text {
-                font-size: 3rem;
-                height: 150px;
-            }
-            
-            .text-drop {
-                font-size: 16px;
-            }
-        }
-        
         /* 动画效果 */
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -257,19 +231,75 @@
         
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background-color: #f00;
             opacity: 0.7;
         }
         
         .particle {
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
             border-radius: 50%;
             pointer-events: none;
             z-index: 10;
+        }
+        
+        /* 手机横屏适配 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                max-width: 90%;
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .prize-display {
+                height: 100px;
+                margin: 10px 0;
+            }
+            
+            .prize-item {
+                font-size: 1.5rem;
+            }
+            
+            .particle-text {
+                font-size: 2.5rem;
+                height: 100px;
+            }
+        }
+        
+        /* 超大屏幕适配 */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .prize-display {
+                height: 180px;
+            }
+            
+            .prize-item {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .particle-text {
+                font-size: 4rem;
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -335,15 +365,15 @@
             // 创建文字雨
             function createTextRain() {
                 textRain.innerHTML = '';
-                const textCount = 120;
+                const textCount = 80; // 手机端减少文字数量
                 const texts = ["HAPPY BIRTHDAY", "生日快乐", "BON ANNIVERSAIRE", "お誕生日おめでとう", "생일 축하해"];
                 
                 // 创建更均匀分布的文字雨
-                const columns = 12; // 将屏幕分成12列
+                const columns = 8; // 减少列数适应手机屏幕
                 const columnWidth = window.innerWidth / columns;
                 
                 for (let col = 0; col < columns; col++) {
-                    const rows = 8; // 每列8个文字
+                    const rows = 6; // 每列6个文字
                     for (let row = 0; row < rows; row++) {
                         const text = document.createElement('div');
                         text.className = 'text-drop';
@@ -353,7 +383,7 @@
                         const left = col * columnWidth + Math.random() * columnWidth;
                         
                         // 垂直方向也均匀分布
-                        const top = -100 - (row * 150);
+                        const top = -100 - (row * 120);
                         
                         text.style.left = left + 'px';
                         text.style.top = top + 'px';
@@ -377,8 +407,9 @@
                 canvas.width = particleText.offsetWidth;
                 canvas.height = particleText.offsetHeight;
                 
-                // 绘制文字
-                ctx.font = 'bold 5rem Arial';
+                // 根据屏幕大小调整字体
+                const fontSize = window.innerWidth < 768 ? '3rem' : '5rem';
+                ctx.font = `bold ${fontSize} Arial`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = 'white';
@@ -390,8 +421,11 @@
                 
                 // 收集所有非透明像素的位置
                 const positions = [];
-                for (let y = 0; y < canvas.height; y += 2) { // 每2像素取样一次，减少粒子数量但保持密集
-                    for (let x = 0; x < canvas.width; x += 2) {
+                // 根据屏幕大小调整取样密度
+                const step = window.innerWidth < 768 ? 3 : 2;
+                
+                for (let y = 0; y < canvas.height; y += step) {
+                    for (let x = 0; x < canvas.width; x += step) {
                         const index = (y * canvas.width + x) * 4;
                         if (data[index + 3] > 0) { // 检查alpha通道
                             positions.push({
@@ -409,7 +443,7 @@
                     const particle = document.createElement('div');
                     particle.className = 'particle';
                     particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.boxShadow = '0 0 8px currentColor';
+                    particle.style.boxShadow = '0 0 6px currentColor';
                     
                     // 随机初始位置
                     const startX = Math.random() * window.innerWidth;
@@ -525,7 +559,7 @@
             function createConfetti() {
                 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
                 
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 80; i++) {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
                     confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
@@ -549,6 +583,14 @@
                     };
                 }
             }
+            
+            // 窗口大小变化时重新创建文字雨和粒子效果
+            window.addEventListener('resize', function() {
+                if (birthdayContainer.style.display === 'flex') {
+                    createTextRain();
+                    createParticleText();
+                }
+            });
         });
     </script>
 </body>
