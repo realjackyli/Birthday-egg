@@ -175,7 +175,7 @@
         }
         
         .avatar-container {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 15;
         }
@@ -186,7 +186,6 @@
             border-radius: 50%;
             border: 5px solid #ffd700;
             object-fit: cover;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
         
         .particle-text-container {
@@ -206,8 +205,8 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            height: 200px;
-            margin-bottom: 20px;
+            height: 150px;
+            margin-bottom: 10px;
         }
         
         .birthday-particle-text {
@@ -217,7 +216,7 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            height: 250px;
+            height: 180px;
         }
         
         .text-rain {
@@ -245,11 +244,6 @@
             to {
                 transform: translateY(100vh);
             }
-        }
-        
-        @keyframes colorChange {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
         }
         
         /* 手机适配 */
@@ -306,13 +300,13 @@
             
             .name-particle-text {
                 font-size: 3.5rem;
-                height: 150px;
-                margin-bottom: 10px;
+                height: 120px;
+                margin-bottom: 5px;
             }
             
             .birthday-particle-text {
                 font-size: 4.5rem;
-                height: 180px;
+                height: 140px;
             }
             
             .text-drop {
@@ -351,13 +345,13 @@
             
             .name-particle-text {
                 font-size: 2.5rem;
-                height: 100px;
-                margin-bottom: 10px;
+                height: 80px;
+                margin-bottom: 5px;
             }
             
             .birthday-particle-text {
                 font-size: 3rem;
-                height: 120px;
+                height: 100px;
             }
         }
         
@@ -392,13 +386,13 @@
             
             .name-particle-text {
                 font-size: 6rem;
-                height: 220px;
-                margin-bottom: 30px;
+                height: 180px;
+                margin-bottom: 15px;
             }
             
             .birthday-particle-text {
                 font-size: 7rem;
-                height: 280px;
+                height: 200px;
             }
         }
         
@@ -458,7 +452,7 @@
         </div>
         
         <div class="copyright">
-            © 2023 幸运抽奖系统 | 版权所有
+            © 2025 Rirililas | 版权所有
         </div>
     </div>
 
@@ -475,7 +469,7 @@
         </div>
         <div class="text-rain" id="textRain"></div>
         <div class="copyright">
-            © 2023 幸运抽奖系统 | 版权所有
+            © 2025 Rirililas | 版权所有
         </div>
     </div>
 
@@ -576,8 +570,8 @@
                 
                 // 收集所有非透明像素的位置
                 const positions = [];
-                // 根据屏幕大小调整取样密度
-                const step = window.innerWidth < 768 ? 2 : 1;
+                // 使用更小的步长，使粒子更密集
+                const step = 1; // 固定为1，使粒子非常密集
                 
                 for (let y = 0; y < canvas.height; y += step) {
                     for (let x = 0; x < canvas.width; x += step) {
@@ -598,7 +592,7 @@
                     const particle = document.createElement('div');
                     particle.className = particleClass;
                     particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.boxShadow = '0 0 8px currentColor';
+                    // 移除了发光效果
                     
                     // 随机初始位置
                     const startX = Math.random() * window.innerWidth;
