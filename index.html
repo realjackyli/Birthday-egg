@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>幸运抽奖与生日祝福</title>
+    <title>幸运抽奖</title>
     <style>
         * {
             margin: 0;
@@ -36,6 +36,7 @@
             transition: all 0.5s;
             z-index: 10;
             margin: 0 auto;
+            position: relative;
         }
         
         h1 {
@@ -134,24 +135,16 @@
             margin-top: 10px;
         }
         
-        .history {
-            margin-top: 30px;
-            text-align: left;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        
-        .history h3 {
-            margin-bottom: 10px;
-            color: #ffd700;
-        }
-        
-        .history-item {
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* 版权信息 */
+        .copyright {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0 20px;
         }
         
         /* 生日祝福页面样式 */
@@ -170,15 +163,51 @@
             padding: 20px;
         }
         
+        .birthday-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .avatar-container {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 15;
+        }
+        
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ffd700;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .name {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            position: relative;
+            z-index: 15;
+        }
+        
         .particle-text {
             font-size: 5rem;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 30px;
             position: relative;
             z-index: 10;
             width: 100%;
             height: 200px;
+            margin-top: 20px;
         }
         
         .text-rain {
@@ -241,8 +270,6 @@
             .controls {
                 gap: 15px;
                 margin-top: 20px;
-                flex-direction: column;
-                align-items: center;
             }
             
             .btn {
@@ -262,27 +289,28 @@
                 font-size: 1.8rem;
             }
             
-            .history {
-                margin-top: 20px;
-                padding: 12px;
-                max-height: 120px;
+            .avatar {
+                width: 120px;
+                height: 120px;
             }
             
-            .history h3 {
-                font-size: 1rem;
-            }
-            
-            .history-item {
-                font-size: 0.9rem;
+            .name {
+                font-size: 2.2rem;
+                margin-bottom: 20px;
             }
             
             .particle-text {
-                font-size: 3rem;
+                font-size: 3.5rem;
                 height: 150px;
+                margin-top: 10px;
             }
             
             .text-drop {
                 font-size: 16px;
+            }
+            
+            .copyright {
+                font-size: 0.7rem;
             }
         }
         
@@ -304,6 +332,16 @@
             
             .prize-item {
                 font-size: 1.5rem;
+            }
+            
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
             }
             
             .particle-text {
@@ -334,6 +372,15 @@
             .btn {
                 padding: 18px 50px;
                 font-size: 1.3rem;
+            }
+            
+            .avatar {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .name {
+                font-size: 3.5rem;
             }
             
             .particle-text {
@@ -382,36 +429,53 @@
         
         <div class="controls">
             <button class="btn" id="startBtn">开始抽奖</button>
-            <button class="btn" id="resetBtn" disabled>重新开始</button>
         </div>
         
         <div class="result" id="result">
             抽奖结果将显示在这里
         </div>
         
-        <div class="history">
-            <h3>抽奖历史</h3>
-            <div id="historyList"></div>
+        <div class="copyright">
+            © 2023 幸运抽奖系统 | 版权所有
         </div>
     </div>
 
     <!-- 生日祝福页面 -->
     <div class="birthday-container" id="birthdayContainer">
-        <div class="particle-text" id="particleText"></div>
+        <div class="birthday-content">
+            <div class="avatar-container">
+                <img src="https://via.placeholder.com/150" alt="寿星头像" class="avatar" id="avatar">
+            </div>
+            <div class="name" id="nameDisplay">寿星姓名</div>
+            <div class="particle-text" id="particleText"></div>
+        </div>
         <div class="text-rain" id="textRain"></div>
+        <div class="copyright">
+            © 2023 幸运抽奖系统 | 版权所有
+        </div>
     </div>
+
+    <!-- 音频元素 -->
+    <audio id="scrollSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-208.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const prizeDisplay = document.getElementById('prizeDisplay');
             const currentPrize = document.getElementById('currentPrize');
             const startBtn = document.getElementById('startBtn');
-            const resetBtn = document.getElementById('resetBtn');
             const result = document.getElementById('result');
-            const historyList = document.getElementById('historyList');
             const birthdayContainer = document.getElementById('birthdayContainer');
             const particleText = document.getElementById('particleText');
             const textRain = document.getElementById('textRain');
+            const avatar = document.getElementById('avatar');
+            const nameDisplay = document.getElementById('nameDisplay');
+            const scrollSound = document.getElementById('scrollSound');
+            const bgMusic = document.getElementById('bgMusic');
             
             // 奖品列表 - 虽然显示多个，但实际只能中"幸运大奖"
             const prizes = [
@@ -428,7 +492,10 @@
             let isSpinning = false;
             let spinInterval;
             let spinSpeed = 50; // 初始速度(ms)
-            let history = [];
+            
+            // 设置默认头像和姓名
+            avatar.src = "https://via.placeholder.com/150/FFD700/000000?text=头像";
+            nameDisplay.textContent = "寿星姓名";
             
             // 创建文字雨
             function createTextRain() {
@@ -477,7 +544,7 @@
                 canvas.height = particleText.offsetHeight;
                 
                 // 根据屏幕大小调整字体
-                const fontSize = window.innerWidth < 768 ? '3rem' : '5rem';
+                const fontSize = window.innerWidth < 768 ? '3.5rem' : '5rem';
                 ctx.font = `bold ${fontSize} Arial`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -538,8 +605,11 @@
                 
                 isSpinning = true;
                 startBtn.disabled = true;
-                resetBtn.disabled = true;
                 result.innerHTML = "抽奖中...";
+                
+                // 播放滚动音效
+                scrollSound.currentTime = 0;
+                scrollSound.play();
                 
                 // 重置显示
                 currentPrize.textContent = prizes[0];
@@ -575,15 +645,6 @@
                         setTimeout(function() {
                             result.innerHTML = `恭喜你获得了：<div class="final-prize">幸运大奖</div>`;
                             isSpinning = false;
-                            resetBtn.disabled = false;
-                            
-                            // 添加到历史记录
-                            const now = new Date();
-                            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-                            const historyItem = document.createElement('div');
-                            historyItem.className = 'history-item';
-                            historyItem.textContent = `${timeString} - 幸运大奖`;
-                            historyList.insertBefore(historyItem, historyList.firstChild);
                             
                             // 添加庆祝效果
                             createConfetti();
@@ -605,24 +666,12 @@
                     birthdayContainer.style.display = 'flex';
                     createTextRain();
                     createParticleText();
+                    
+                    // 播放背景音乐
+                    bgMusic.currentTime = 0;
+                    bgMusic.play();
                 }, 1000);
             }
-            
-            // 重新开始
-            resetBtn.addEventListener('click', function() {
-                currentPrize.textContent = "点击开始抽奖";
-                currentPrize.classList.remove('pulse');
-                result.innerHTML = "抽奖结果将显示在这里";
-                startBtn.disabled = false;
-                resetBtn.disabled = true;
-                
-                // 重置速度
-                spinSpeed = 50;
-                
-                // 隐藏生日祝福页面
-                birthdayContainer.style.display = 'none';
-                document.querySelector('.container').style.opacity = '1';
-            });
             
             // 创建庆祝彩花效果
             function createConfetti() {
