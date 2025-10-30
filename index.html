@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>幸运抽奖</title>
+    <title>幸运抽奖与生日祝福</title>
     <style>
         * {
             margin: 0;
@@ -189,17 +189,17 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
         
-        .name {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        .particle-text-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
             position: relative;
-            z-index: 15;
+            z-index: 10;
         }
         
-        .particle-text {
+        .name-particle-text {
             font-size: 5rem;
             font-weight: bold;
             text-align: center;
@@ -207,7 +207,17 @@
             z-index: 10;
             width: 100%;
             height: 200px;
-            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .birthday-particle-text {
+            font-size: 6rem;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 250px;
         }
         
         .text-rain {
@@ -294,15 +304,15 @@
                 height: 120px;
             }
             
-            .name {
-                font-size: 2.2rem;
-                margin-bottom: 20px;
-            }
-            
-            .particle-text {
+            .name-particle-text {
                 font-size: 3.5rem;
                 height: 150px;
-                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .birthday-particle-text {
+                font-size: 4.5rem;
+                height: 180px;
             }
             
             .text-drop {
@@ -339,14 +349,15 @@
                 height: 80px;
             }
             
-            .name {
-                font-size: 1.8rem;
-                margin-bottom: 15px;
-            }
-            
-            .particle-text {
+            .name-particle-text {
                 font-size: 2.5rem;
                 height: 100px;
+                margin-bottom: 10px;
+            }
+            
+            .birthday-particle-text {
+                font-size: 3rem;
+                height: 120px;
             }
         }
         
@@ -379,13 +390,15 @@
                 height: 180px;
             }
             
-            .name {
-                font-size: 3.5rem;
+            .name-particle-text {
+                font-size: 6rem;
+                height: 220px;
+                margin-bottom: 30px;
             }
             
-            .particle-text {
-                font-size: 6rem;
-                height: 250px;
+            .birthday-particle-text {
+                font-size: 7rem;
+                height: 280px;
             }
         }
         
@@ -409,6 +422,15 @@
         }
         
         .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .name-particle {
             position: absolute;
             width: 6px;
             height: 6px;
@@ -444,10 +466,12 @@
     <div class="birthday-container" id="birthdayContainer">
         <div class="birthday-content">
             <div class="avatar-container">
-                <img src="https://via.placeholder.com/150" alt="寿星头像" class="avatar" id="avatar">
+                <img src="https://via.placeholder.com/150/FFD700/000000?text=头像" alt="寿星头像" class="avatar" id="avatar">
             </div>
-            <div class="name" id="nameDisplay">寿星姓名</div>
-            <div class="particle-text" id="particleText"></div>
+            <div class="particle-text-container">
+                <div class="name-particle-text" id="nameParticleText"></div>
+                <div class="birthday-particle-text" id="birthdayParticleText"></div>
+            </div>
         </div>
         <div class="text-rain" id="textRain"></div>
         <div class="copyright">
@@ -470,10 +494,10 @@
             const startBtn = document.getElementById('startBtn');
             const result = document.getElementById('result');
             const birthdayContainer = document.getElementById('birthdayContainer');
-            const particleText = document.getElementById('particleText');
+            const nameParticleText = document.getElementById('nameParticleText');
+            const birthdayParticleText = document.getElementById('birthdayParticleText');
             const textRain = document.getElementById('textRain');
             const avatar = document.getElementById('avatar');
-            const nameDisplay = document.getElementById('nameDisplay');
             const scrollSound = document.getElementById('scrollSound');
             const bgMusic = document.getElementById('bgMusic');
             
@@ -492,10 +516,6 @@
             let isSpinning = false;
             let spinInterval;
             let spinSpeed = 50; // 初始速度(ms)
-            
-            // 设置默认头像和姓名
-            avatar.src = "https://via.placeholder.com/150/FFD700/000000?text=头像";
-            nameDisplay.textContent = "寿星姓名";
             
             // 创建文字雨
             function createTextRain() {
@@ -532,24 +552,23 @@
             }
             
             // 创建粒子效果文字
-            function createParticleText() {
-                particleText.innerHTML = '';
+            function createParticleText(text, container, fontSize, particleClass) {
+                container.innerHTML = '';
                 
                 // 创建Canvas用于绘制文字轮廓
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 
                 // 设置Canvas尺寸
-                canvas.width = particleText.offsetWidth;
-                canvas.height = particleText.offsetHeight;
+                canvas.width = container.offsetWidth;
+                canvas.height = container.offsetHeight;
                 
                 // 根据屏幕大小调整字体
-                const fontSize = window.innerWidth < 768 ? '3.5rem' : '5rem';
                 ctx.font = `bold ${fontSize} Arial`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = 'white';
-                ctx.fillText('生日快乐', canvas.width/2, canvas.height/2);
+                ctx.fillText(text, canvas.width/2, canvas.height/2);
                 
                 // 获取文字像素数据
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -558,15 +577,15 @@
                 // 收集所有非透明像素的位置
                 const positions = [];
                 // 根据屏幕大小调整取样密度
-                const step = window.innerWidth < 768 ? 3 : 2;
+                const step = window.innerWidth < 768 ? 2 : 1;
                 
                 for (let y = 0; y < canvas.height; y += step) {
                     for (let x = 0; x < canvas.width; x += step) {
                         const index = (y * canvas.width + x) * 4;
                         if (data[index + 3] > 0) { // 检查alpha通道
                             positions.push({
-                                x: x + (particleText.offsetWidth - canvas.width) / 2,
-                                y: y + (particleText.offsetHeight - canvas.height) / 2
+                                x: x + (container.offsetWidth - canvas.width) / 2,
+                                y: y + (container.offsetHeight - canvas.height) / 2
                             });
                         }
                     }
@@ -577,9 +596,9 @@
                 
                 positions.forEach((pos, index) => {
                     const particle = document.createElement('div');
-                    particle.className = 'particle';
+                    particle.className = particleClass;
                     particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    particle.style.boxShadow = '0 0 6px currentColor';
+                    particle.style.boxShadow = '0 0 8px currentColor';
                     
                     // 随机初始位置
                     const startX = Math.random() * window.innerWidth;
@@ -588,7 +607,7 @@
                     particle.style.left = startX + 'px';
                     particle.style.top = startY + 'px';
                     
-                    particleText.appendChild(particle);
+                    container.appendChild(particle);
                     
                     // 动画：粒子飞向目标位置
                     setTimeout(() => {
@@ -665,7 +684,14 @@
                 setTimeout(function() {
                     birthdayContainer.style.display = 'flex';
                     createTextRain();
-                    createParticleText();
+                    
+                    // 创建名字粒子效果
+                    const nameFontSize = window.innerWidth < 768 ? '3.5rem' : '5rem';
+                    createParticleText('寿星姓名', nameParticleText, nameFontSize, 'name-particle');
+                    
+                    // 创建生日快乐粒子效果
+                    const birthdayFontSize = window.innerWidth < 768 ? '4.5rem' : '6rem';
+                    createParticleText('生日快乐', birthdayParticleText, birthdayFontSize, 'particle');
                     
                     // 播放背景音乐
                     bgMusic.currentTime = 0;
@@ -707,7 +733,11 @@
             window.addEventListener('resize', function() {
                 if (birthdayContainer.style.display === 'flex') {
                     createTextRain();
-                    createParticleText();
+                    const nameFontSize = window.innerWidth < 768 ? '3.5rem' : '5rem';
+                    createParticleText('寿星姓名', nameParticleText, nameFontSize, 'name-particle');
+                    
+                    const birthdayFontSize = window.innerWidth < 768 ? '4.5rem' : '6rem';
+                    createParticleText('生日快乐', birthdayParticleText, birthdayFontSize, 'particle');
                 }
             });
         });
