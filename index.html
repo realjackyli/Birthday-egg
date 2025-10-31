@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>给乖仔的神秘礼物</title>
+    <title>幸运抽奖与生日祝福</title>
     <style>
         * {
             margin: 0;
@@ -318,43 +318,6 @@
             }
         }
         
-        /* 手机横屏适配 */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .container {
-                max-width: 90%;
-                padding: 15px;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .prize-display {
-                height: 100px;
-                margin: 10px 0;
-            }
-            
-            .prize-item {
-                font-size: 1.5rem;
-            }
-            
-            .avatar {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .name-particle-text {
-                font-size: 2.5rem;
-                height: 80px;
-                margin-bottom: 5px;
-            }
-            
-            .birthday-particle-text {
-                font-size: 3rem;
-                height: 100px;
-            }
-        }
-        
         /* 超大屏幕适配 */
         @media (min-width: 1200px) {
             .container {
@@ -417,8 +380,8 @@
         
         .particle {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 6px;  /* 减小粒子尺寸 */
+            height: 6px; /* 减小粒子尺寸 */
             border-radius: 50%;
             pointer-events: none;
             z-index: 10;
@@ -426,8 +389,8 @@
         
         .name-particle {
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 4px;  /* 减小粒子尺寸 */
+            height: 4px; /* 减小粒子尺寸 */
             border-radius: 50%;
             pointer-events: none;
             z-index: 10;
@@ -460,7 +423,7 @@
     <div class="birthday-container" id="birthdayContainer">
         <div class="birthday-content">
             <div class="avatar-container">
-                <img src="https://via.placeholder.com/150/FFD700/000000?text=头像" alt="寿星头像" class="avatar" id="avatar">
+                <img src="https://github.com/realjackyli/bdaygift/blob/main/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251031085821.jpg?raw=true" alt="寿星头像" class="avatar" id="avatar">
             </div>
             <div class="particle-text-container">
                 <div class="name-particle-text" id="nameParticleText"></div>
@@ -475,10 +438,10 @@
 
     <!-- 音频元素 -->
     <audio id="scrollSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
+        <source src="Drumroll-sound-effect.mp3" type="audio/mpeg">
     </audio>
     <audio id="bgMusic" loop preload="auto">
-        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-208.mp3" type="audio/mpeg">
+        <source src="轻松愉快的氛围曲-开心活泼-祝你生日快乐（古典版）_爱给网_aigei_com.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -514,16 +477,16 @@
             // 创建文字雨
             function createTextRain() {
                 textRain.innerHTML = '';
-                // 根据屏幕大小调整文字数量
-                const textCount = window.innerWidth < 768 ? 80 : 120;
+                // 减少文字数量
+                const textCount = window.innerWidth < 768 ? 50 : 80;
                 const texts = ["HAPPY BIRTHDAY", "生日快乐", "BON ANNIVERSAIRE", "お誕生日おめでとう", "생일 축하해"];
                 
                 // 根据屏幕大小调整列数
-                const columns = window.innerWidth < 768 ? 8 : 12;
+                const columns = window.innerWidth < 768 ? 6 : 8;
                 const columnWidth = window.innerWidth / columns;
                 
                 for (let col = 0; col < columns; col++) {
-                    const rows = window.innerWidth < 768 ? 6 : 8;
+                    const rows = window.innerWidth < 768 ? 4 : 6;
                     for (let row = 0; row < rows; row++) {
                         const text = document.createElement('div');
                         text.className = 'text-drop';
@@ -570,8 +533,8 @@
                 
                 // 收集所有非透明像素的位置
                 const positions = [];
-                // 使用更小的步长，使粒子更密集
-                const step = 1; // 固定为1，使粒子非常密集
+                // 增加步长以减少粒子数量
+                const step = window.innerWidth < 768 ? 2 : 3; // 手机端步长2，电脑端步长3
                 
                 for (let y = 0; y < canvas.height; y += step) {
                     for (let x = 0; x < canvas.width; x += step) {
@@ -592,7 +555,6 @@
                     const particle = document.createElement('div');
                     particle.className = particleClass;
                     particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    // 移除了发光效果
                     
                     // 随机初始位置
                     const startX = Math.random() * window.innerWidth;
@@ -696,7 +658,7 @@
             // 创建庆祝彩花效果
             function createConfetti() {
                 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-                const confettiCount = window.innerWidth < 768 ? 80 : 100;
+                const confettiCount = window.innerWidth < 768 ? 50 : 70; // 减少彩花数量
                 
                 for (let i = 0; i < confettiCount; i++) {
                     const confetti = document.createElement('div');
@@ -728,7 +690,7 @@
                 if (birthdayContainer.style.display === 'flex') {
                     createTextRain();
                     const nameFontSize = window.innerWidth < 768 ? '3.5rem' : '5rem';
-                    createParticleText('寿星姓名', nameParticleText, nameFontSize, 'name-particle');
+                    createParticleText('赖德棋', nameParticleText, nameFontSize, 'name-particle');
                     
                     const birthdayFontSize = window.innerWidth < 768 ? '4.5rem' : '6rem';
                     createParticleText('生日快乐', birthdayParticleText, birthdayFontSize, 'particle');
